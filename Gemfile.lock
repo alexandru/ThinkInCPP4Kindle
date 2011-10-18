@@ -1,0 +1,33 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    archive-tar-minitar (0.5.2)
+    blankslate (2.1.2.4)
+    columnize (0.3.4)
+    ffi (1.0.9)
+    linecache19 (0.5.12)
+      ruby_core_source (>= 0.1.4)
+    nokogiri (1.5.0)
+    pygments.rb (0.2.3)
+      rubypython (>= 0.5.1)
+    ruby-debug-base19 (0.11.25)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby_core_source (>= 0.1.4)
+    ruby-debug19 (0.11.6)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby-debug-base19 (>= 0.11.19)
+    ruby_core_source (0.1.5)
+      archive-tar-minitar (>= 0.5.2)
+    rubypython (0.5.1)
+      blankslate (>= 2.1.2.3)
+      ffi (~> 1.0.7)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  nokogiri
+  pygments.rb
+  ruby-debug19

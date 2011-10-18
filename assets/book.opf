@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The unique identifier in <package unique-identifier=”XYZ”> is a reference to
+  the identifier specified in <metadata> as <dc:Identifier id=”XYZ”>.
+-->
+<package xmlns="http://www.idpf.org/2007/opf" version="2.0" unique-identifier="BookId">
+
+  <!--
+     Metadata:
+     The required metadata element is used to provide information about the publication
+     as a whole.
+     
+     For detailed info visit: http://www.idpf.org/2007/opf/OPF_2.0_final_spec.html#Section2.2
+  -->  
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+
+    <dc:title>Thinking in C++</dc:title>
+    <dc:language>en-us</dc:language>
+    <meta name="cover" content="BookCover" />
+    
+    <dc:identifier id="BookId" opf:scheme="ISBN">0139798099</dc:identifier>
+    <dc:publisher>Alexandru Nedelcu</dc:publisher>
+    <dc:subject>Reference</dc:subject>
+    <dc:date>2011-10-18</dc:date>
+    <dc:description>
+      Fully revised and beefed up with plenty of new material on
+      today's Standard C++, the new edition of Bruce Eckel's Thinking
+      in C++: Volume I is an excellent tutorial to mastering this rich
+      (and sometimes daunting) programming language, filled with
+      expert advice and written in a patient, knowledgeable style.
+    </dc:description>  
+  </metadata>  
+
+  <manifest>
+    <item id="item1" media-type="application/xhtml+xml" href="toc.html"></item>
+    <%
+       count = 1
+       for item in html_items
+         count += 1
+    %><item id="item<%= count %>" media-type="application/xhtml+xml" href="<%= item %>"></item>
+    <% end %>
+    <%
+       count = 0
+       for item in graphic_items
+         count += 1
+    %><item id="Graphics<%= count %>" media-type="image/gif" href="<%= item %>"></item>
+    <% end %>
+    <item id="BookCover" media-type="image/jpg" href="cover.jpg"/>
+  </manifest>
+
+
+  <spine toc="My_Table_of_Contents">
+    <!-- the spine defines the linear reading order of the book -->
+    <itemref idref="item1" />
+    <%
+       count = 1
+       for item in html_items
+         count += 1
+    %><itemref idref="item<%= count %>" />
+    <% end %>
+  </spine>
+
+  <!--
+     Guide:
+     Within the package there may be one guide element, containing one or more reference elements.
+     The guide element identifies fundamental structural components of the publication, to enable
+     Reading Systems to provide convenient access to them.
+     
+     For detailed info visit: http://www.idpf.org/2007/opf/OPF_2.0_final_spec.html#Section2.6
+     
+     The Kindle reading system support two special guide items which are both mandatory.
+     type="toc"  [mandatory]: a link to the HTML table of contents
+     type="text" [mandatory]: a link to where the content of the book starts (typically after the front matter)
+     
+     Kindle reading platforms need both thede guid items to provide a consistent user enxperience to the user.
+     
+     It is good practice to include both a logical table of contents (NCX) and an HTML table of contents
+     (made of hyperlinks). The NCX enables various advanced navigation features but the HTML table of
+     contents can easily be discovered by the user by paging through the book. Both are useful.     
+    -->
+  
+  <guide>
+    <reference type="toc" title="Table of Contents" href="toc.html"></reference>
+    <reference type="text" title="Preface" href="Preface.html"></reference>
+  </guide>
+
+</package>
