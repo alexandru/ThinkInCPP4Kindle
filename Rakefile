@@ -67,14 +67,16 @@ task :build_html => :html_files_unzip do
         end
       end
 
-      doc.css('blockquote pre').each do |elem|
-        html = CGI.unescapeHTML(elem.inner_html)
-        html = html.gsub /<\/?[^>]+>/, ''
-        elem.inner_html = Pygments.highlight(html, :options => {:noclasses => true}, :lexer => 'cpp')
-      end
+      unless fpath =~ /Preface/
+        doc.css('blockquote pre').each do |elem|
+          html = CGI.unescapeHTML(elem.inner_html)
+          html = html.gsub /<\/?[^>]+>/, ''
+          elem.inner_html = Pygments.highlight(html, :options => {:noclasses => true}, :lexer => 'cpp')
+        end
 
-      doc.css('blockquote pre div.highlight').each do |elem|
-        elem.parent.parent.inner_html = elem.to_html
+        doc.css('blockquote pre div.highlight').each do |elem|
+          elem.parent.parent.inner_html = elem.to_html
+        end
       end
 
       body_html = doc.css('body').first.inner_html
@@ -122,7 +124,7 @@ task :generate_toc => :build_html do
   html_files = FileList['build/*.html'].select{|x| x =~ /Chapter|Appendix/}.sort{|a,b| a =~ /Appendix/ && b =~ /Chapter/ ? 1 : (a =~ /Chapter/ && b =~ /Appendix/ ? -1 : a <=> b)}
   html_files.insert 0, 'build/Preface.html'
 
-  contents_html = "<ul>\n"
+  contents_html = "<ul id='toc'>\n"
 
   html_files.each do |fpath|
     html = File.read(fpath)
