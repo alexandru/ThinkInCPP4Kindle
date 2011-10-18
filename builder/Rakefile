@@ -189,6 +189,6 @@ end
 task :default => :build_opf do
   Dir.chdir('build') do
     puts `/opt/kindlegen/kindlegen book.opf -o thinking-in-cpp.mobi`
-    mv "thinking-in-cpp.mobi", ".."
+    mv "thinking-in-cpp.mobi", "../.."
   end    
 end
