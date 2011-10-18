@@ -160,7 +160,7 @@ task :generate_toc => :build_html do
   
   File.open('build/toc.html', 'w') do |fh|
     html_template = ''
-    File.open('assets/html-template.html'){|fh| html_template = fh.read}
+    File.open('assets/toc-template.html'){|fh| html_template = fh.read}
     html_template = ERB.new html_template        
 
     title = "Table of Contents"
