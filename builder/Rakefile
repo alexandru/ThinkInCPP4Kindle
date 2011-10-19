@@ -61,26 +61,35 @@ task :build_html => :html_files_unzip do
       doc = Nokogiri::HTML(html)
 
       while true
-        blanks = doc.css('*').select{|x| x.inner_html.strip == ''}
+        blanks = doc.css('*').select{|x| x.name != 'a' && x.inner_html.strip == ''}
         break unless blanks.length > 0
         blanks.each do |elem|
           elem.remove
         end
       end
 
-      unless fpath =~ /Preface/ or fpath =~ /Frontmatter/
-        doc.css('blockquote pre').each do |elem|
-          html = CGI.unescapeHTML(elem.inner_html)
-          html = html.gsub /<\/?(div|span|font)[^>]*>/, ''
-          elem.inner_html = Pygments.highlight(html, :options => {:noclasses => true}, :lexer => 'cpp')
-        end
+      doc.css('blockquote pre').each do |elem|
+        parent = elem.ancestors('blockquote').first
+        parent.name = 'pre'
+        html = elem.inner_html
 
-        doc.css('blockquote pre div.highlight').each do |elem|
-          elem.parent.parent.inner_html = elem.to_html
-        end
+        unless fpath =~ /Preface/ or fpath =~ /Frontmatter/
+          html = Pygments.highlight(html, :options => {:noclasses => true}, :lexer => 'cpp')
+          parent.inner_html = html
+          parent.inner_html = parent.css('pre').inner_html
+          # only keeping font styling, not colors
+          parent.css('span[style]').each do |span|
+            style = span.attr('style')
+            style = style.sub(/color:\s*[^;]+;?/, '').strip
 
-        doc.css('blockquote div.highlight pre').each do |elem|
-          elem.parent.parent.name = 'div'
+            unless style != ''
+              span.remove_attribute('style')
+            else
+              span.set_attribute('style', style)
+            end
+          end
+        else
+          parent.inner_html = html
         end
       end
 
@@ -194,7 +203,7 @@ end
 
 task :default => :build_opf do
   Dir.chdir('build') do
-    puts `/opt/kindlegen/kindlegen book.opf -o thinking-in-cpp.mobi`
-    mv "thinking-in-cpp.mobi", "../.."
+    puts `/opt/kindlegen/kindlegen book.opf -o thinking-in-cpp-vol1.mobi`
+    mv "thinking-in-cpp-vol1.mobi", "../.."
   end    
 end
