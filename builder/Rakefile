@@ -39,6 +39,7 @@ task :build_html => :html_files_unzip do
 
   to_process = FileList['build/*.html'].select{|x| x =~ /Chapter|Appendix/}.sort{|a,b| a =~ /Appendix/ && b =~ /Chapter/ ? 1 : (a =~ /Chapter/ && b =~ /Appendix/ ? -1 : a <=> b)}
   to_process.insert 0, 'build/Preface.html'
+  to_process.insert 0, 'build/Frontmatter.html'
 
   to_process.each do |fpath|
     File.open(fpath) do |src|
@@ -67,15 +68,19 @@ task :build_html => :html_files_unzip do
         end
       end
 
-      unless fpath =~ /Preface/
+      unless fpath =~ /Preface/ or fpath =~ /Frontmatter/
         doc.css('blockquote pre').each do |elem|
           html = CGI.unescapeHTML(elem.inner_html)
-          html = html.gsub /<\/?[^>]+>/, ''
+          html = html.gsub /<\/?(div|span|font)[^>]*>/, ''
           elem.inner_html = Pygments.highlight(html, :options => {:noclasses => true}, :lexer => 'cpp')
         end
 
         doc.css('blockquote pre div.highlight').each do |elem|
           elem.parent.parent.inner_html = elem.to_html
+        end
+
+        doc.css('blockquote div.highlight pre').each do |elem|
+          elem.parent.parent.name = 'div'
         end
       end
 
@@ -177,6 +182,7 @@ task :build_opf => :generate_toc do
   
   html_items = FileList['build/*.html'].select{|x| x =~ /Chapter|Appendix/}.sort{|a,b| a =~ /Appendix/ && b =~ /Chapter/ ? 1 : (a =~ /Chapter/ && b =~ /Appendix/ ? -1 : a <=> b)}.map{|x| File.basename(x)}
   html_items.insert 0, 'Preface.html'
+  html_items.insert 0, 'Frontmatter.html'
 
   graphic_items = FileList['build/*.gif'].map{|x| File.basename(x)}
 
