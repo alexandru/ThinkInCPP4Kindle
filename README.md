@@ -11,7 +11,8 @@ get to it.
 
 I'm probably not allowed to do this. I'm not seeing a license to this
 book (only for the code contained), which means the work itself is an
-"All Rights Reserved". But whatever, if anybody has a problem with it
-I'll just delete the generated file.
+"All Rights Reserved". Redistribution of a reformatted version is
+probably not allowed, but I sent an email to Mr. Bruce Eckel asking
+him for permission (if he replies NO, I'll delete the project).
 
 You can use the builder if you want for whatever purposes.

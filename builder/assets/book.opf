@@ -20,6 +20,7 @@
     
     <dc:identifier id="BookId" opf:scheme="ISBN">0139798099</dc:identifier>
     <dc:publisher>Alexandru Nedelcu</dc:publisher>
+    <dc:creator>Bruce Eckel</dc:creator>
     <dc:subject>Reference</dc:subject>
     <dc:date>2011-10-18</dc:date>
     <dc:description>The new edition of Bruce Eckel's Thinking in C++: Volume I is an excellent tutorial to mastering this rich (and sometimes daunting) programming language, filled with expert advice and written in a patient, knowledgeable style.</dc:description>  
