@@ -7,14 +7,16 @@ results are good.
 This is Volume 1. I'm reading it and I'll format Volume 2 when I'll
 get to it.
 
-## License
+## License to the Book
 
 I couldn't find a license to the book, so I contacted the author,
-Mr. Bruce Eckel, asking for permission to redistribute the book
-here. Mr. Eckel graciously granted me permission to do this
-reformatting. So it's cool.
+Mr. Bruce Eckel, asking for permission. He graciously granted me
+permission to do this reformatting.
 
-You can use the builder if you want for whatever purposes ... although
-I haven't made it particularly user friendly (for example it hardcodes
-the path to the kindlegen utility, expecting it to be at
-"/opt/kindlegen/kindlegen").
+## Building it Yourself
+
+You can use the builder if you want for whatever purposes, no strings
+attached ... although I haven't made it particularly user friendly
+(for example it hardcodes the path to the kindlegen utility, expecting
+it to be at "/opt/kindlegen/kindlegen").
+
