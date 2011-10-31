@@ -7,7 +7,7 @@ results are good.
 This is Volume 1. I'm reading it and I'll format Volume 2 when I'll
 get to it.
 
-## License to the Book
+## License
 
 I couldn't find a license to the book, so I contacted the author,
 Mr. Bruce Eckel, asking for permission. He graciously granted me
