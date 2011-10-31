@@ -15,10 +15,9 @@ permission to do this reformatting.
 
 ## Building it Yourself
 
-You can use the builder if you want for whatever purposes, no strings
-attached ... although I haven't made it particularly user friendly
-(for example it hardcodes the path to the kindlegen utility, expecting
-it to be at "/opt/kindlegen/kindlegen").
+I haven't made the builder particularly user friendly (for example it
+hardcodes the path to the kindlegen utility, expecting it to be at
+"/opt/kindlegen/kindlegen").
 
 Even so, you can run these commands:
 
