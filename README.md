@@ -9,10 +9,12 @@ get to it.
 
 ## License
 
-I'm probably not allowed to do this. I'm not seeing a license to this
-book (only for the code contained), which means the work itself is an
-"All Rights Reserved". Redistribution of a reformatted version is
-probably not allowed, but I sent an email to Mr. Bruce Eckel asking
-him for permission (if he replies NO, I'll delete the project).
+I couldn't find a license to the book, so I contacted the author,
+Mr. Bruce Eckel, asking for permission to redistribute the book
+here. Mr. Eckel graciously granted me permission to do this
+reformatting. So it's cool.
 
-You can use the builder if you want for whatever purposes.
+You can use the builder if you want for whatever purposes ... although
+I haven't made it particularly user friendly (for example it hardcodes
+the path to the kindlegen utility, expecting it to be at
+"/opt/kindlegen/kindlegen").
