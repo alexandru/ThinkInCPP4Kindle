@@ -20,3 +20,10 @@ attached ... although I haven't made it particularly user friendly
 (for example it hardcodes the path to the kindlegen utility, expecting
 it to be at "/opt/kindlegen/kindlegen").
 
+Even so, you can run these commands:
+
+```bash
+cd builder/
+bundle install
+rake
+```
