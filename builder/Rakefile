@@ -71,12 +71,15 @@ task :build_html => :html_files_unzip do
       doc.css('blockquote pre').each do |elem|
         parent = elem.ancestors('blockquote').first
         parent.name = 'pre'
-        html = elem.inner_html
+        html = elem.text
+        html = html.split(/\r?\n/).map{|x| x = " " + x}.join("\n")
 
         unless fpath =~ /Preface/ or fpath =~ /Frontmatter/
           html = Pygments.highlight(html, :options => {:noclasses => true}, :lexer => 'cpp')
+
           parent.inner_html = html
           parent.inner_html = parent.css('pre').inner_html
+
           # only keeping font styling, not colors
           parent.css('span[style]').each do |span|
             style = span.attr('style')
@@ -138,7 +141,7 @@ task :generate_toc => :build_html do
   html_files = FileList['build/*.html'].select{|x| x =~ /Chapter|Appendix/}.sort{|a,b| a =~ /Appendix/ && b =~ /Chapter/ ? 1 : (a =~ /Chapter/ && b =~ /Appendix/ ? -1 : a <=> b)}
   html_files.insert 0, 'build/Preface.html'
 
-  contents_html = "<ul id='toc'>\n"
+  contents_html = ""
 
   html_files.each do |fpath|
     html = File.read(fpath)
@@ -148,30 +151,20 @@ task :generate_toc => :build_html do
     fname = File.basename(fpath)
     h1_elem = doc.css('h1')
     h1_name = h1_elem.css('a').attr('name').value
-    h1_text = h1_elem.css('a').inner_html.strip
-
-    contents_html += "  <li><a href='#{fname}##{h1_name}'>#{h1_text}</a></li>\n"
-    started = false
+    h1_text = h1_elem.text.gsub(/[\n\r\s]+/, ' ').strip
+    h1_text = 'Preface' if h1_text.empty?
+    
+    contents_html += "<p><a href='#{fname}##{h1_name}'>#{h1_text}</a></p>"
+    contents_html += "<p>"
 
     doc.css('h2').each do |h2_elem|
       h2_name = h2_elem.css('a').attr('name').value
-      h2_text = h2_elem.css('a').inner_html.strip.gsub(/\r?\n/, ' ').gsub(/\s+/, ' ')
-      if not started
-        contents_html += "  <li>\n"
-        contents_html += "    <ul>\n"
-        started = true
-      end
-      contents_html += "      <li><a href='#{fname}##{h2_name}'>#{h2_text}</a></li>\n"
+      h2_text = h2_elem.text.strip.gsub(/\r?\n/, ' ').gsub(/\s+/, ' ').capitalize
+      contents_html += "    &nbsp;&nbsp;&nbsp;<a href='#{fname}##{h2_name}'>#{h2_text}</a><br />\n"
     end
-
-    if started
-      contents_html += "    </ul>\n"
-      contents_html += "  </li>\n"
-    end
+    contents_html += "</p>\n"
   end
 
-  contents_html += "</ul>\n"
-  
   File.open('build/toc.html', 'w') do |fh|
     html_template = ''
     File.open('assets/toc-template.html'){|fh| html_template = fh.read}
